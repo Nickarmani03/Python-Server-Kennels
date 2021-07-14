@@ -2,7 +2,7 @@ ANIMALS = [
     {
         "id": 1,
         "name": "Snickers",
-        "species": "Dog",
+        "breed": "Dog",
         "locationId": 2,
         "customerId": 3,
         "status": "Admitted"
@@ -10,7 +10,7 @@ ANIMALS = [
     {
         "id": 2,
         "name": "Gypsy",
-        "species": "Dog",
+        "breed": "Dog",
         "locationId": 1,
         "customerId": 2,
         "status": "Admitted"
@@ -18,7 +18,7 @@ ANIMALS = [
     {
         "id": 3,
         "name": "Blue",
-        "species": "Cat",
+        "breed": "Cat",
         "locationId": 2,
         "customerId": 1,
         "status": "Admitted"
@@ -73,7 +73,7 @@ def delete_animal(id):
 
     # Iterate the ANIMALS list, but use enumerate() so that you
     # can access the index value of each item
-    for index, animal in enumerate(ANIMALS):
+    for index, animal in enumerate(ANIMALS): #this is a for loop
         if animal["id"] == id:
             # Found the animal. Store the current index.
             animal_index = index
@@ -85,7 +85,7 @@ def delete_animal(id):
 def update_animal(id, new_animal):
     """this is editing an animal"""
     # Iterate the ANIMALS list, but use enumerate() so that
-    # you can access the index value of each item.
+    # you can access the index and value of each item.
     for index, animal in enumerate(ANIMALS):
         if animal["id"] == id:
             # Found the animal. Update the value.
