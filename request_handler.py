@@ -108,10 +108,10 @@ class HandleRequests(BaseHTTPRequestHandler):
     def do_POST(self):
         """Handles POST requests to the server
         """
-        # Set response code to 'Created'
+        # Set response code to 'Created' gets content from the client
         self._set_headers(201)
         content_len = int(self.headers.get('content-length', 0))
-        post_body = self.rfile.read(content_len)
+        post_body = self.rfile.read(content_len) # reads the content recieved
 
         # Convert JSON string to a Python dictionary
         post_body = json.loads(post_body)#json is a python dictionary
@@ -149,7 +149,7 @@ class HandleRequests(BaseHTTPRequestHandler):
     # It handles any PUT request.
 
     def do_PUT(self):
-        """Handles PUT requests to the server
+        """Handles PUT requests to the server. for updating. Sends the whole object (dictionary) to the client. It needs all keys value pairs
         """
         self._set_headers(204)
         content_len = int(self.headers.get('content-length', 0))
@@ -159,21 +159,26 @@ class HandleRequests(BaseHTTPRequestHandler):
         # Parse the URL
         (resource, id) = self.parse_url(self.path)
 
-        # Delete a single animal from the list
-        if resource == "animals":
+        # Update a single animal from the list
+        if resource == "animals": #conditional
             update_animal(id, post_body)
+
         if resource == "locations":
             update_location(id, post_body)
+
         if resource == "employees":
             update_employee(id, post_body)
+
         if resource == "customers":
             update_customer(id, post_body)
+
+        self.wfile.write("".encode())
 
 
     def do_DELETE(self):
         """Handles DELETE requests to the server
         """
-        # Set a 204 response code
+        # Set a 204 response code. This means everything is ok but there is bnothing to return.
         self._set_headers(204)
 
         # Parse the URL
@@ -182,21 +187,18 @@ class HandleRequests(BaseHTTPRequestHandler):
         # Delete a single animal from the list
         if resource == "animals":
             delete_animal(id)
-            self.wfile.write("".encode())
 
         if resource == "locations":
             delete_location(id)
-            self.wfile.write("".encode())
 
         if resource == "employees":
             delete_employee(id)
-            self.wfile.write("".encode())
 
         if resource == "customers":
             delete_customer(id)
 
-        # Encode the new animal and send in response
-            self.wfile.write("".encode())
+        # Encode the new animal and send in response. Needed to write the response back to the client in the post body
+            self.wfile.write("".encode())#the response needs to be encoded
 
 
 # This function is not inside the class. It is the starting

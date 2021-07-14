@@ -8,6 +8,5 @@ def __init__(self, id, name, address, email):
     self.name = name
     self.address = address
     self.email = email
-    
 
 new_customer = Customer(1, "Clark Kent", "7200 Nowland Ave", "clark@gmail.com")

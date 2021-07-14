@@ -73,7 +73,7 @@ def delete_animal(id):
 
     # Iterate the ANIMALS list, but use enumerate() so that you
     # can access the index value of each item
-    for index, animal in enumerate(ANIMALS):
+    for index, animal in enumerate(ANIMALS): #this is a for loop
         if animal["id"] == id:
             # Found the animal. Store the current index.
             animal_index = index
@@ -85,7 +85,7 @@ def delete_animal(id):
 def update_animal(id, new_animal):
     """this is editing an animal"""
     # Iterate the ANIMALS list, but use enumerate() so that
-    # you can access the index value of each item.
+    # you can access the index and value of each item.
     for index, animal in enumerate(ANIMALS):
         if animal["id"] == id:
             # Found the animal. Update the value.

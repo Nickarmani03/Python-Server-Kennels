@@ -15,9 +15,9 @@ LOCATIONS = [
         "address": "123 Wakanda St."
     },
     {
+        "id": 4,
         "name": "Murfreesboro Kennels",
-        "address": "123 Fake St.",
-        "id": 4
+        "address": "123 Fake St."
     }
 ]
 
