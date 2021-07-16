@@ -106,18 +106,18 @@ class HandleRequests(BaseHTTPRequestHandler):
     # Here's a method on the class that overrides the parent's method.
     # It handles any POST request.
     def do_POST(self):
-        """Handles POST requests to the server
+        """Handles POST function requests to the server
         """
-        # Set response code to 'Created' gets content from the client
-        self._set_headers(201)
-        content_len = int(self.headers.get('content-length', 0))
-        post_body = self.rfile.read(content_len) # reads the content recieved
+        # Set response code to 'Created' 201 gets content from the client
+        self._set_headers(201) # self is the parameter
+        content_len = int(self.headers.get('content-length', 0)) # how many characters in the request body
+        post_body = self.rfile.read(content_len) # reads the content recieved. tells it to read as long as the lenth is in the post body
 
-        # Convert JSON string to a Python dictionary
-        post_body = json.loads(post_body)#json is a python dictionary
+        # Convert from JSON string to a Python dictionary
+        post_body = json.loads(post_body)# from json to a python dictionary
 
         # Parse the URL
-        (resource, _) = self.parse_url(self.path)
+        (resource, _) = self.parse_url(self.path) # tuple (resource, id). resource is now animals.
         # Add a new animal to the list. Don't worry about
         # the orange squiggle, you'll define the create_animal
         # function next

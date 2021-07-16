@@ -49,16 +49,16 @@ def get_single_animal(id):
     return requested_animal
 
 
-def create_animal(animal):
+def create_animal(animal): #parameter of animal
     """this is creating a new animal"""
     # Get the id value of the last animal in the list
-    max_id = ANIMALS[-1]["id"]
+    max_id = ANIMALS[-1]["id"] 
 
     # Add 1 to whatever that number is
     new_id = max_id + 1
 
     # Add an `id` property to the animal dictionary
-    animal["id"] = new_id
+    animal["id"] = new_id #new id variable
 
     # Add the animal dictionary to the list
     ANIMALS.append(animal)
