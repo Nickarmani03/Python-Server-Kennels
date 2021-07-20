@@ -1,0 +1,13 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "name": "Python Kennels",
+            "database": "kennel.db"
+        }
+    ],
+    "sqltools.useNodeRuntime": true,
+    "python.formatting.autopep8Path": "/home/armani03/.local/bin/autopep8",
+    "python.linting.pylintEnabled": true
+}
