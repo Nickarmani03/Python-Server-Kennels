@@ -143,7 +143,7 @@ class HandleRequests(BaseHTTPRequestHandler):
                 response = get_employees_by_location_id(value)
 
             if key == "status" and resource == "animals":
-                response = f"{get_animals_by_status(value)}"
+                response = get_animals_by_status(value)
 
             if key == "name" and resource == "customers":
                 response = get_customer_by_name(value)
@@ -203,7 +203,6 @@ class HandleRequests(BaseHTTPRequestHandler):
     def do_PUT(self):
         """Handles PUT requests to the server. for updating. Sends the whole object (dictionary) to the client. It needs all keys value pairs
         """
-        self._set_headers(204)
         content_len = int(self.headers.get('content-length', 0))
         post_body = self.rfile.read(content_len)
         post_body = json.loads(post_body)
@@ -211,19 +210,25 @@ class HandleRequests(BaseHTTPRequestHandler):
         # Parse the URL
         (resource, id) = self.parse_url(self.path)
 
+        success = False
+
         # Update a single animal from the list
         if resource == "animals":  # conditional
             update_animal(id, post_body)
 
-        if resource == "locations":
+        elif resource == "locations":
             update_location(id, post_body)
 
-        if resource == "employees":
+        elif resource == "employees":
             update_employee(id, post_body)
 
-        if resource == "customers":
+        elif resource == "customers":
             update_customer(id, post_body)
 
+        if success:
+            self._set_headers(204)
+        else:
+            self._set_headers(404)
         self.wfile.write("".encode())
 
     def do_DELETE(self):

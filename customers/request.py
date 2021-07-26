@@ -105,19 +105,13 @@ def create_customer(customer):
 
 def delete_customer(id):
     """this is removing an customer"""
-    # Initial -1 value for customer index, in case one isn't found
-    customer_index = -1
+    with sqlite3.connect("./kennel.db") as conn:
+        db_cursor = conn.cursor()  # executes a sequal statement
 
-    # Iterate the customerS list, but use enumerate() so that you
-    # can access the index value of each item
-    for index, customer in enumerate(CUSTOMERS):
-        if customer["id"] == id:
-            # Found the customer. Store the current index.
-            customer_index = index
-
-    # If the customer was found, use pop(int) to remove it from list
-    if customer_index >= 0:
-        CUSTOMERS.pop(customer_index)
+        db_cursor.execute("""
+        DELETE FROM customer
+        WHERE id = ?
+        """, (id, ))  # the sequal parameter
 
 
 def update_customer(id, new_customer):
@@ -129,6 +123,7 @@ def update_customer(id, new_customer):
             # Found the customer. Update the value.
             CUSTOMERS[index] = new_customer
             break
+
 
 def get_customers_by_email(email):
     """this is getting a customer by their email"""
@@ -158,8 +153,10 @@ def get_customers_by_email(email):
 
     return json.dumps(customers)
 
-def get_customer_by_name(name):
+
+def get_customer_by_name(full_name):
     """this is getting a customer by their name"""
+    name = " ".join(full_name.split("+"))
     with sqlite3.connect("./kennel.db") as conn:
         conn.row_factory = sqlite3.Row
         db_cursor = conn.cursor()
@@ -172,7 +169,7 @@ def get_customer_by_name(name):
             c.address,
             c.email,
             c.password
-        from Customer c
+        FROM Customer c
         WHERE c.name = ?
         """, (name, ))
 
