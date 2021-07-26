@@ -25,29 +25,30 @@ LOCATIONS = [
     }
 ]
 
+
 def get_all_locations():
     """this is getting all locations"""
     # Open a connection to the database
-    with sqlite3.connect("./kennel.db") as conn:# connection to the db file
+    with sqlite3.connect("./kennel.db") as conn:  # connection to the db file
 
         # Just use these. It's a Black Box.
         conn.row_factory = sqlite3.Row
-        db_cursor = conn.cursor() #allows to execute quieries
+        db_cursor = conn.cursor()  # allows to execute quieries
 
         # Write the SQL query to get the information you want
         db_cursor.execute("""
         SELECT
-            a.id,
-            a.name,
-            a.address
-        FROM location a
+            l.id,
+            l.name,
+            l.address
+        FROM Location l
         """)
 
         # Initialize an empty list to hold all location representations
         locations = []
 
         # Convert rows of data into a Python list
-        dataset = db_cursor.fetchall() #returns a list
+        dataset = db_cursor.fetchall()  # returns a list
 
         # Iterate list of data returned from database. iterating though the dataset dictionaries
         for row in dataset:
@@ -58,9 +59,10 @@ def get_all_locations():
             # location class above.
             location = Location(row['id'], row['name'], row['address'])
 
-            locations.append(location.__dict__) #turns location object into a dictionary
+            # turns location object into a dictionary
+            locations.append(location.__dict__)
 
-    # Use `json` package to properly serialize list as JSON
+    # Use `json` package to properly serialize list as JSON. turnes it into a nicer looking dictionary
     return json.dumps(locations)
 
 
@@ -74,19 +76,20 @@ def get_single_location(id):
         # into the SQL statement.
         db_cursor.execute("""
         SELECT
-            a.id,
-            a.name,
-            a.address
-        FROM location a
-        WHERE a.id = ? 
-        """, ( id, ))# replaces the question mark with an id  uses a sequal query
+            l.id,
+            l.name,
+            l.address
+        FROM Location l
+        WHERE l.id = ? 
+        """, (id, ))  # replaces the question mark with an id  uses a sequal query
         # Load the single result into memory
-        data = db_cursor.fetchone()# returns one row
+        data = db_cursor.fetchone()  # returns one row
 
-        # Create an location instance from the current row
+        # Create an location instance from the current row.
         location = Location(data['id'], data['name'], data['address'])
 
         return json.dumps(location.__dict__)
+
 
 def create_location(location):
     """this is creating a new location"""
@@ -96,6 +99,7 @@ def create_location(location):
     LOCATIONS.append(location)
 
     return location
+
 
 def delete_location(id):
     """this is removing an location"""
@@ -112,6 +116,7 @@ def delete_location(id):
     # If the location was found, use pop(int) to remove it from list
     if location_index >= 0:
         LOCATIONS.pop(location_index)
+
 
 def update_location(id, new_location):
     """this is editing an location"""
